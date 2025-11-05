@@ -35,6 +35,15 @@ $exp_desc    = arr('exp_desc');
 $ref_nome    = arr('ref_nome');
 $ref_cargo   = arr('ref_cargo');
 $ref_contato = arr('ref_contato');
+
+// Idiomas (texto simples)
+$idiomas = campo('idiomas');
+
+// Formação acadêmica (arrays)
+$form_curso  = arr('form_curso');
+$form_inst   = arr('form_inst');
+$form_inicio = arr('form_inicio');
+$form_fim    = arr('form_fim');
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -102,6 +111,13 @@ $ref_contato = arr('ref_contato');
             </ul>
         <?php endif; ?>
 
+        <!-- Idiomas -->
+        <?php if ($idiomas): ?>
+            <hr>
+            <h3 class="h5">Idiomas</h3>
+            <p><?php echo nl2br(htmlspecialchars($idiomas)); ?></p>
+        <?php endif; ?>
+
         <!-- Experiência Profissional -->
         <?php
         $temExp = false;
@@ -143,6 +159,45 @@ $ref_contato = arr('ref_contato');
                     </small>
                     <?php if ($desc): ?>
                         <p class="mb-0"><?php echo nl2br(htmlspecialchars($desc)); ?></p>
+                    <?php endif; ?>
+                </div>
+            <?php endfor; ?>
+        <?php endif; ?>
+
+        <!-- Formação Acadêmica -->
+        <?php
+        $temForm = false;
+        foreach ($form_curso as $i => $curso) {
+            if (trim($curso) !== '' || trim($form_inst[$i] ?? '') !== '') {
+                $temForm = true;
+                break;
+            }
+        }
+        ?>
+
+        <?php if ($temForm): ?>
+            <hr>
+            <h3 class="h5">Formação Acadêmica</h3>
+            <?php for ($i = 0; $i < count($form_curso); $i++): ?>
+                <?php
+                $curso = trim($form_curso[$i] ?? '');
+                $inst  = trim($form_inst[$i] ?? '');
+                $ini   = trim($form_inicio[$i] ?? '');
+                $fim   = trim($form_fim[$i] ?? '');
+                if ($curso === '' && $inst === '') continue;
+                ?>
+                <div class="mb-2">
+                    <strong><?php echo htmlspecialchars($curso); ?></strong><br>
+                    <?php if ($inst): ?>
+                        <span><?php echo htmlspecialchars($inst); ?></span><br>
+                    <?php endif; ?>
+                    <?php if ($ini || $fim): ?>
+                        <small class="text-muted">
+                            <?php echo htmlspecialchars($ini); ?>
+                            <?php if ($fim): ?>
+                                &nbsp;–&nbsp;<?php echo htmlspecialchars($fim); ?>
+                            <?php endif; ?>
+                        </small>
                     <?php endif; ?>
                 </div>
             <?php endfor; ?>

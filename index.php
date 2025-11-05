@@ -65,6 +65,11 @@
             <textarea name="habilidades" class="form-control" rows="3"></textarea>
         </div>
 
+<div class="col-12">
+    <label class="form-label">Idiomas (ex.: Inglês fluente, Espanhol intermediário)</label>
+    <textarea name="idiomas" class="form-control" rows="2"></textarea>
+</div>
+
         <!-- EXPERIÊNCIA PROFISSIONAL (DINÂMICA) -->
         <div class="d-flex justify-content-between align-items-center mt-4">
             <h2 class="h5 mb-0">Experiência Profissional</h2>
@@ -102,6 +107,39 @@
                 </div>
             </div>
         </div>
+
+<!-- FORMAÇÃO ACADÊMICA (DINÂMICA) -->
+<div class="d-flex justify-content-between align-items-center mt-4">
+    <h2 class="h5 mb-0">Formação Acadêmica</h2>
+    <button type="button" id="addForm" class="btn btn-outline-secondary btn-sm">
+        + Adicionar formação
+    </button>
+</div>
+
+<div id="formacoes" class="mt-2">
+    <!-- Bloco base de formação -->
+    <div class="row g-3 form-item">
+        <div class="col-md-6">
+            <label class="form-label">Curso</label>
+            <input type="text" name="form_curso[]" class="form-control">
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label">Instituição</label>
+            <input type="text" name="form_inst[]" class="form-control">
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label">Início (mm/aaaa)</label>
+            <input type="text" name="form_inicio[]" class="form-control">
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label">Fim (mm/aaaa ou Atual)</label>
+            <input type="text" name="form_fim[]" class="form-control">
+        </div>
+    </div>
+</div>
 
         <!-- REFERÊNCIAS PESSOAIS (DINÂMICAS) -->
         <div class="d-flex justify-content-between align-items-center mt-4">
@@ -201,7 +239,23 @@ if (btnAddRef && containerRef) {
         containerRef.appendChild(clone);
     });
 }
-</script>
 
+// ========== BOTÃO + PARA FORMAÇÃO ACADÊMICA ==========
+const btnAddForm    = document.getElementById('addForm');
+const containerForm = document.getElementById('formacoes');
+
+if (btnAddForm && containerForm) {
+    btnAddForm.addEventListener('click', function () {
+        const modelo = containerForm.querySelector('.form-item');
+        if (!modelo) return;
+
+        const clone = modelo.cloneNode(true);
+        const campos = clone.querySelectorAll('input');
+        campos.forEach(campo => campo.value = '');
+
+        containerForm.appendChild(clone);
+    });
+}
+</script>
 </body>
 </html>
